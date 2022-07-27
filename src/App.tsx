@@ -1,24 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import "./App.css";
+import Select from "./components/select";
+import { ISizeOption } from "./interfaces";
+
+const numberOfSquares = [
+  {
+    name: "Easy",
+    field: 5,
+  },
+  {
+    name: "Normal",
+    field: 15,
+  },
+  {
+    name: "Hard",
+    field: 25,
+  },
+];
 
 function App() {
+  const [sizeOptions, setSizeOptions] = useState<ISizeOption[]>([]);
+  const [size, setSize] = useState<ISizeOption | null>(null);
+
+  useEffect(() => {
+    setSizeOptions(numberOfSquares);
+  }, []);
+
+  console.log(sizeOptions);
+
+  const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(e.target.value);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="selectContainer">
+        <Select options={sizeOptions} handleOptionChange={handleSizeChange} />
+      </div>
     </div>
   );
 }
