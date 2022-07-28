@@ -1,3 +1,4 @@
 import ISizeOption from "./ISizeOption";
+import ICell from "./ICell";
 
-export type { ISizeOption };
+export type { ISizeOption, ICell };

@@ -6,8 +6,35 @@
   height: 300px;
 }
 
+.leftContainer {
+  display: flex;
+  flex-direction: column;
+
+  width: 250px;
+
+  background-color: pink;
+}
+
+.rightContainer {
+  width: 200px;
+}
+
+.selectButtonContainer {
+  display: flex;
+  margin-bottom: 20px;
+}
+
 .selectContainer {
   width: 150px;
   height: 30px;
-  background-color: pink;
+  margin-right: 10px;
+}
+
+button {
+  border: none;
+  border-radius: 5px;
+  padding: 0 10px;
+  background-color: #0375d8;
+  color: #fff;
+  font-weight: 800;
 }

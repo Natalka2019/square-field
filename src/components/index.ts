@@ -1,3 +1,4 @@
 import Select from "./select";
+import Field from "./field";
 
-export { Select };
+export { Select, Field };
