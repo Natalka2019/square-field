@@ -25,19 +25,23 @@ const Field: React.FC<IProps> = ({
   };
 
   const onMouseOver = (e: any) => {
+    const row = e?.target?.closest("tr")?.rowIndex + 1;
+    const column = e.target.cellIndex + 1;
     const id = JSON.stringify({
-      row: e.target.closest("tr").rowIndex + 1,
-      column: e.target.cellIndex + 1,
+      row,
+      column,
     });
 
     const cell = {
-      row: e.target.closest("tr").rowIndex + 1,
-      column: e.target.cellIndex + 1,
+      row,
+      column,
       id,
       selected: isSelected(id),
     };
 
-    onCellHover(cell);
+    if (row && column) {
+      onCellHover(cell);
+    }
   };
 
   return (
