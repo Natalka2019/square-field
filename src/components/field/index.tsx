@@ -6,9 +6,17 @@ interface IProps {
   size: number;
   selectedCells: ICell[];
   onCellHover: (cell: ICell) => void;
+  onLeaveField: () => void;
+  play: boolean;
 }
 
-const Field: React.FC<IProps> = ({ size, selectedCells, onCellHover }) => {
+const Field: React.FC<IProps> = ({
+  size,
+  selectedCells,
+  onCellHover,
+  onLeaveField,
+  play,
+}) => {
   const columns = Array.from({ length: 5 }).fill(" ");
   const rows = Array.from({ length: size / 5 }).fill(" ");
 
@@ -16,10 +24,30 @@ const Field: React.FC<IProps> = ({ size, selectedCells, onCellHover }) => {
     return selectedCells.find((cell) => cell.id === id) ? true : false;
   };
 
+  const onMouseOver = (e: any) => {
+    const id = JSON.stringify({
+      row: e.target.closest("tr").rowIndex + 1,
+      column: e.target.cellIndex + 1,
+    });
+
+    const cell = {
+      row: e.target.closest("tr").rowIndex + 1,
+      column: e.target.cellIndex + 1,
+      id,
+      selected: isSelected(id),
+    };
+
+    onCellHover(cell);
+  };
+
   return (
     <div className={styles.fieldContainer}>
-      {size && (
-        <table>
+      {size > 0 && (
+        <table
+          onMouseOut={onLeaveField}
+          onMouseOver={(e) => onMouseOver(e)}
+          className={play ? styles.activeTable : ""}
+        >
           <tbody>
             {rows.map((_, rowIndex) => (
               <tr key={uuidv4()}>
@@ -29,18 +57,10 @@ const Field: React.FC<IProps> = ({ size, selectedCells, onCellHover }) => {
                     column: columnIndex + 1,
                   });
 
-                  const cell = {
-                    row: rowIndex + 1,
-                    column: columnIndex + 1,
-                    id,
-                    selected: isSelected(id),
-                  };
-
                   return (
                     <td
                       key={id}
                       className={isSelected(id) ? styles.selectedCell : ""}
-                      onMouseEnter={() => onCellHover(cell)}
                     ></td>
                   );
                 })}

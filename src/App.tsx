@@ -24,6 +24,7 @@ function App() {
   const [selectedCells, setSelectedCells] = useState<ICell[]>([]);
 
   let selectedId: any = useRef("");
+  let play: any = useRef(false);
 
   useEffect(() => {
     setSizeOptions(numberOfSquares);
@@ -31,9 +32,22 @@ function App() {
 
   const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSize(+e.target.value);
+    selectedId.current = "";
+    setSelectedCells([]);
+    play.current = false;
+  };
+
+  const onStartClick = () => {
+    selectedId.current = "";
+    setSelectedCells([]);
+    play.current = true;
   };
 
   const onHover = (cell: ICell) => {
+    if (play.current === false) {
+      return;
+    }
+
     if (!cell.selected && cell.id !== selectedId.current) {
       const updatedSelection = [...selectedCells, cell];
 
@@ -49,38 +63,45 @@ function App() {
     }
   };
 
+  const onLeaveField = () => {
+    selectedId.current = "";
+  };
+
   return (
     <div className="App">
-      <div className="leftContainer">
-        <div className="selectButtonContainer">
-          <div className="selectContainer">
-            <Select
-              options={sizeOptions}
-              handleOptionChange={handleSizeChange}
+      <main className="mainContainer">
+        <div className="leftContainer">
+          <div className="selectButtonContainer">
+            <div className="selectContainer">
+              <Select
+                options={sizeOptions}
+                handleOptionChange={handleSizeChange}
+              />
+            </div>
+            <button onClick={onStartClick}>START</button>
+          </div>
+          <div className="fieldContainer">
+            <Field
+              size={size}
+              onCellHover={onHover}
+              selectedCells={selectedCells}
+              onLeaveField={onLeaveField}
+              play={play.current}
             />
           </div>
-          <button>START</button>
         </div>
-        <div className="fieldContainer">
-          <Field
-            size={size}
-            onCellHover={onHover}
-            selectedCells={selectedCells}
-            //onCellLeave={onCellLeave}
-          />
+        <div className="rightContainer">
+          {selectedCells.length > 0 && (
+            <ul>
+              {selectedCells.map((cell) => (
+                <li key={cell.id}>
+                  row {cell.row} col {cell.column}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-      </div>
-      <div className="rightContainer">
-        {selectedCells.length > 0 && (
-          <ul>
-            {selectedCells.map((cell) => (
-              <li key={cell.id}>
-                row {cell.row} col {cell.column}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      </main>
     </div>
   );
 }

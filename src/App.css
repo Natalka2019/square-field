@@ -1,9 +1,17 @@
 .App {
   display: flex;
   justify-content: center;
-  align-items: center;
 
-  height: 300px;
+  height: 100vh;
+}
+
+.mainContainer {
+  display: flex;
+
+  width: 500px;
+  margin-top: 100px;
+
+  background-color: aqua;
 }
 
 .leftContainer {
@@ -17,11 +25,14 @@
 
 .rightContainer {
   width: 200px;
+  padding: 20px;
+
+  background-color: aquamarine;
 }
 
 .selectButtonContainer {
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .selectContainer {
@@ -37,4 +48,5 @@ button {
   background-color: #0375d8;
   color: #fff;
   font-weight: 800;
+  cursor: pointer;
 }
