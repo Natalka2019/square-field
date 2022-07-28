@@ -17,8 +17,7 @@ const Field: React.FC<IProps> = ({
   onLeaveField,
   play,
 }) => {
-  const columns = Array.from({ length: 5 }).fill(" ");
-  const rows = Array.from({ length: size / 5 }).fill(" ");
+  const arrayFromSize = Array.from({ length: size }).fill(" ");
 
   const isSelected: (id: string) => boolean = (id: string) => {
     return selectedCells.find((cell) => cell.id === id) ? true : false;
@@ -53,9 +52,9 @@ const Field: React.FC<IProps> = ({
           className={play ? styles.activeTable : ""}
         >
           <tbody>
-            {rows.map((_, rowIndex) => (
+            {arrayFromSize.map((_, rowIndex) => (
               <tr key={uuidv4()}>
-                {columns.map((_, columnIndex) => {
+                {arrayFromSize.map((_, columnIndex) => {
                   const id = JSON.stringify({
                     row: rowIndex + 1,
                     column: columnIndex + 1,

@@ -94,9 +94,9 @@ const GamePage: React.FC = () => {
         </div>
       </div>
       <div className={styles.rightContainer}>
+        <h2>Hover squares</h2>
         {selectedCells.length > 0 && (
           <ul>
-            <h2>Hover squares</h2>
             {selectedCells.map((cell) => (
               <li key={cell.id}>
                 row {cell.row} col {cell.column}
